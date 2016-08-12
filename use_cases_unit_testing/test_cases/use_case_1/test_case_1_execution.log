@@ -1,0 +1,157 @@
+WARNING: Use "yarn jar" to launch YARN applications.
+Aug 12, 2016 5:35:42 PM com.spotify.beetest.TestQueryExecutor run
+INFO: Generated query filename: /tmp/beetest-test-2101186839-query.hql
+Aug 12, 2016 5:35:42 PM com.spotify.beetest.TestQueryExecutor run
+INFO: Generated query content: 
+CREATE DATABASE IF NOT EXISTS beetest;
+USE beetest;
+DROP TABLE IF EXISTS movies;
+
+CREATE TABLE movies (movie_id BIGINT, title STRING, genres STRING)
+ROW FORMAT DELIMITED  FIELDS TERMINATED BY ',' 
+STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH 'test_cases/use_case_1/movies.csv' INTO TABLE movies;
+
+DROP TABLE IF EXISTS ratings;
+
+CREATE TABLE ratings (user_id bigint, movie_id bigint, rating float, time_stamp string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
+STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH 'test_cases/use_case_1/ratings.csv' INTO TABLE ratings;
+DROP TABLE IF EXISTS output_2101186839;
+CREATE TABLE output_2101186839
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY '\t'
+COLLECTION ITEMS TERMINATED BY '|'
+MAP KEYS TERMINATED BY '$'
+LOCATION '/tmp/beetest-test-2101186839-output_2101186839' AS 
+SELECT movie_id, title, count(*)
+ FROM movies
+ RIGHT OUTER JOIN ratings
+ ON movies.movie_id=ratings.movie_id
+ GROUP BY movies.movie_id, title;
+
+Aug 12, 2016 5:35:42 PM com.spotify.beetest.TestQueryExecutor run
+INFO: Running: hive -f /tmp/beetest-test-2101186839-query.hql --hivevar table=ratings
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: WARNING: Use "yarn jar" to launch YARN applications.
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: 
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Logging initialized using configuration in file:/etc/hive/2.4.2.0-258/0/hive-log4j.properties
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 1.526 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.265 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.611 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.547 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Loading data to table beetest.movies
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Table beetest.movies stats: [numFiles=1, totalSize=246]
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 1.355 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.562 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.533 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Loading data to table beetest.ratings
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Table beetest.ratings stats: [numFiles=1, totalSize=420]
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 1.067 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.14 seconds
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Query ID = hive_20160812173554_606f7885-b61e-41c2-8426-300679f05d15
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Total jobs = 1
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: WARNING: Use "yarn jar" to launch YARN applications.
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Execution log at: /tmp/hive/hive_20160812173554_606f7885-b61e-41c2-8426-300679f05d15.log
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:36:01	Starting to launch local task to process map join;	maximum memory = 1046478848
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:36:02	Dump the side-table for tag: 0 with group count: 5 into file: file:/tmp/hive/0d8346dd-b80d-423d-a1bd-fad0babefa0d/hive_2016-08-12_17-35-54_328_1920449268006470176-1/-local-10004/HashTable-Stage-2/MapJoin-mapfile00--.hashtable
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:36:02	Uploaded 1 File to: file:/tmp/hive/0d8346dd-b80d-423d-a1bd-fad0babefa0d/hive_2016-08-12_17-35-54_328_1920449268006470176-1/-local-10004/HashTable-Stage-2/MapJoin-mapfile00--.hashtable (494 bytes)
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:36:02	End of local task; Time Taken: 1.147 sec.
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Execution completed successfully
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: MapredLocal task succeeded
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Launching Job 1 out of 1
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Number of reduce tasks not specified. Estimated from input data size: 1
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: In order to change the average load for a reducer (in bytes):
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO:   set hive.exec.reducers.bytes.per.reducer=<number>
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: In order to limit the maximum number of reducers:
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO:   set hive.exec.reducers.max=<number>
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: In order to set a constant number of reducers:
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO:   set mapreduce.job.reduces=<number>
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Starting Job = job_1470292818033_0039, Tracking URL = http://impetus-i0095.impetus.co.in:8088/proxy/application_1470292818033_0039/
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Kill Command = /usr/hdp/2.4.2.0-258/hadoop/bin/hadoop job  -kill job_1470292818033_0039
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:36:12,032 Stage-2 map = 0%,  reduce = 0%
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:36:18,276 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 1.94 sec
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:36:25,505 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 4.21 sec
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: MapReduce Total cumulative CPU time: 4 seconds 210 msec
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Ended Job = job_1470292818033_0039
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Moving data to: /tmp/beetest-test-2101186839-output_2101186839
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Table beetest.output_2101186839 stats: [numFiles=1, numRows=4, totalSize=120, rawDataSize=116]
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: MapReduce Jobs Launched: 
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 4.21 sec   HDFS Read: 12386 HDFS Write: 202 SUCCESS
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Total MapReduce CPU Time Spent: 4 seconds 210 msec
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:36:27 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 32.866 seconds
+Aug 12, 2016 5:36:30 PM com.spotify.beetest.TestQueryExecutor run
+INFO: Asserting: test_cases/use_case_1/expected.txt and test_cases/use_case_1/beetest-test-2101186839-output_2101186839/000000_0
+Aug 12, 2016 5:36:30 PM com.spotify.beetest.TestQueryExecutor run
+SEVERE: Test Case is passed successfully.

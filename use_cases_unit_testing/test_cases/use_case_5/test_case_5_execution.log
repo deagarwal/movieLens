@@ -1,0 +1,113 @@
+WARNING: Use "yarn jar" to launch YARN applications.
+Aug 12, 2016 5:38:07 PM com.spotify.beetest.TestQueryExecutor run
+INFO: Generated query filename: /tmp/beetest-test-1829942557-query.hql
+Aug 12, 2016 5:38:07 PM com.spotify.beetest.TestQueryExecutor run
+INFO: Generated query content: 
+CREATE DATABASE IF NOT EXISTS beetest;
+USE beetest;
+DROP TABLE IF EXISTS ratings;
+
+CREATE TABLE ratings (user_id bigint, movie_id bigint, rating float, time_stamp string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
+STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH 'test_cases/use_case_5/ratings.csv' INTO TABLE ratings;
+DROP TABLE IF EXISTS output_1829942557;
+CREATE TABLE output_1829942557
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY '\t'
+COLLECTION ITEMS TERMINATED BY '|'
+MAP KEYS TERMINATED BY '$'
+LOCATION '/tmp/beetest-test-1829942557-output_1829942557' AS 
+select user_id, max(rating), min(rating), round(avg(rating),2) from ratings group by user_id;
+
+Aug 12, 2016 5:38:07 PM com.spotify.beetest.TestQueryExecutor run
+INFO: Running: hive -f /tmp/beetest-test-1829942557-query.hql --hivevar table=ratings
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: WARNING: Use "yarn jar" to launch YARN applications.
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: 
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Logging initialized using configuration in file:/etc/hive/2.4.2.0-258/0/hive-log4j.properties
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 1.146 seconds
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.253 seconds
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.497 seconds
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.504 seconds
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Loading data to table beetest.ratings
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Table beetest.ratings stats: [numFiles=1, totalSize=420]
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 1.125 seconds
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 0.141 seconds
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Query ID = hive_20160812173816_b3616ad0-985f-42ba-9313-40ed986994c2
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Total jobs = 1
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Launching Job 1 out of 1
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Number of reduce tasks not specified. Estimated from input data size: 1
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: In order to change the average load for a reducer (in bytes):
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO:   set hive.exec.reducers.bytes.per.reducer=<number>
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: In order to limit the maximum number of reducers:
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO:   set hive.exec.reducers.max=<number>
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: In order to set a constant number of reducers:
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO:   set mapreduce.job.reduces=<number>
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Starting Job = job_1470292818033_0040, Tracking URL = http://impetus-i0095.impetus.co.in:8088/proxy/application_1470292818033_0040/
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Kill Command = /usr/hdp/2.4.2.0-258/hadoop/bin/hadoop job  -kill job_1470292818033_0040
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:38:26,452 Stage-1 map = 0%,  reduce = 0%
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:38:32,663 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.83 sec
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: 2016-08-12 17:38:39,888 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 5.05 sec
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: MapReduce Total cumulative CPU time: 5 seconds 50 msec
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Ended Job = job_1470292818033_0040
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Moving data to: /tmp/beetest-test-1829942557-output_1829942557
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Table beetest.output_1829942557 stats: [numFiles=1, numRows=17, totalSize=266, rawDataSize=249]
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: MapReduce Jobs Launched: 
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 5.05 sec   HDFS Read: 10799 HDFS Write: 348 SUCCESS
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Total MapReduce CPU Time Spent: 5 seconds 50 msec
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: OK
+Aug 12, 2016 5:38:41 PM com.spotify.beetest.Utils runCommand
+INFO: Time taken: 25.177 seconds
+Aug 12, 2016 5:38:44 PM com.spotify.beetest.TestQueryExecutor run
+INFO: Asserting: test_cases/use_case_5/expected.txt and test_cases/use_case_5/beetest-test-1829942557-output_1829942557/000000_0
+Aug 12, 2016 5:38:44 PM com.spotify.beetest.TestQueryExecutor run
+SEVERE: Test Case is passed successfully.
